@@ -44,8 +44,11 @@ class HangmanWindow(QGroupBox):
     def createActions(self):
         self.letterBank.letterClicked.connect(self.wordBank.onLetterClicked)
         
-        self.wordBank.letterContainedResponse.connect(self.letterBank.onLetterClickedResponse)
-        self.wordBank.letterContainedResponse.connect(self.drawingBox.onLetterClickedResponse)
-       
+        self.wordBank.wrongGuess.connect(self.letterBank.onWrongGuess)
+        self.wordBank.wrongGuess.connect(self.drawingBox.onWrongGuess)
+        
+        self.wordBank.rightGuess.connect(self.letterBank.onRightGuess)
+        self.wordBank.rightGuess.connect(self.drawingBox.onRightGuess)
+        
         self.wordBank.reset.connect(self.letterBank.onReset)
         self.wordBank.reset.connect(self.drawingBox.onReset)

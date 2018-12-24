@@ -71,12 +71,12 @@ class HangmanLetterBank(QGroupBox):
             self.clicked.append(letter)
             self.letterClicked.emit(letter)
             
-    def onLetterClickedResponse(self, contained):
-        if contained:
-            self.buttonClicked.setStyleSheet(HangmanLetterBank.correctStyle)
-        else:
-            self.buttonClicked.setStyleSheet(HangmanLetterBank.incorrectStyle)
-       
+    def onWrongGuess(self):
+        self.buttonClicked.setStyleSheet(HangmanLetterBank.incorrectStyle)
+            
+    def onRightGuess(self):
+        self.buttonClicked.setStyleSheet(HangmanLetterBank.correctStyle)
+        
     def onReset(self):
         self.buttonClicked = None
         self.clicked = []

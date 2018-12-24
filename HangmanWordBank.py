@@ -17,7 +17,8 @@ from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 
 class HangmanWordBank(QGroupBox):
-    letterContainedResponse = Signal(bool)
+    wrongGuess = Signal()
+    rightGuess = Signal()
     reset = Signal()
     
     def __init__(self):
@@ -111,10 +112,10 @@ class HangmanWordBank(QGroupBox):
             for i in range(len(self.word)):
                 if letter == self.word[i]:
                     self.spaces[i].setText(letter)
-            self.letterContainedResponse.emit(True)
+            self.rightGuess.emit()
             
         else:
             #emit signal with False value to change color of letter button
             #AND draw stick figure
-            self.letterContainedResponse.emit(False)
+            self.wrongGuess.emit()
             
