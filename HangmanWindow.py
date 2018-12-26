@@ -52,3 +52,5 @@ class HangmanWindow(QGroupBox):
         
         self.wordBank.reset.connect(self.letterBank.onReset)
         self.wordBank.reset.connect(self.drawingBox.onReset)
+        
+        self.drawingBox.lose.connect(self.wordBank.onLose)

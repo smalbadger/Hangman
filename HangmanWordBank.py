@@ -23,6 +23,7 @@ class HangmanWordBank(QGroupBox):
     
     def __init__(self):
         super().__init__()
+        self.hideChars = True
         self.createStyle()
         self.setWord("Clarissa Badger")
         self.createElements()
@@ -94,6 +95,8 @@ class HangmanWordBank(QGroupBox):
             text = "_"
             if c == " ":
                 text=" "
+            if self.hideChars == False:
+                text = c
             w = QLabel(text)
             w.setStyleSheet("""text-align: center; 
                                font-size:  200px;
@@ -104,6 +107,8 @@ class HangmanWordBank(QGroupBox):
         
         for widget in self.spaces:
             self.letterLayout.addWidget(widget)
+            
+        self.hideChars = True
         
     def onLetterClicked(self, letter):
         if letter in self.word:
@@ -119,3 +124,8 @@ class HangmanWordBank(QGroupBox):
             #AND draw stick figure
             self.wrongGuess.emit()
             
+            
+    def onLose(self):
+        self.setWord("you lose")
+        self.hideChars = False
+        self.onReset()

@@ -7,9 +7,8 @@ Description:
             view to draw the hangman
 '''
 
-
-
 from PySide2.QtWidgets import *
+from PySide2.QtCore import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -20,6 +19,9 @@ from PySide2.QtOpenGL import *
 import numpy as np
 
 class HangmanDrawingBox(QGLWidget):
+
+    lose = Signal()
+
     def __init__(self):
         super().__init__()
         self.wrongGuesses = 0
@@ -111,7 +113,8 @@ class HangmanDrawingBox(QGLWidget):
     def onWrongGuess(self):
         self.wrongGuesses += 1
         self.updateGL()
-        print("wrong guesses: {}".format(self.wrongGuesses))
+        if self.wrongGuesses >= 4:
+            self.lose.emit()
         
     def onRightGuess(self):
         self.rightGuesses += 1
@@ -121,4 +124,4 @@ class HangmanDrawingBox(QGLWidget):
         self.wrongGuesses = 0
         self.rightGuesses = 0
         self.updateGL()
-        
+         
