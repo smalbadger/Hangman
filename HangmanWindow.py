@@ -7,7 +7,7 @@ Description:
             The main window for the Hangman application
 '''
 
-from PySide2.QtWidgets import QGroupBox
+from PySide2.QtWidgets import *
 
 from PySide2.QtWidgets import QVBoxLayout
 from PySide2.QtWidgets import QHBoxLayout
@@ -27,14 +27,21 @@ class HangmanWindow(QGroupBox):
     def createElements(self):
         self.drawingBox = HangmanDrawingBox()
         self.letterBank = HangmanLetterBank()
+        self.scoreBox = QLabel("Score Box")
+        self.definitionBox = QLabel("Definition Box")
         self.wordBank = HangmanWordBank()
     
     def createLayout(self):
         self.mainLayout = QVBoxLayout()
         self.topLayout = QHBoxLayout()
+        self.rightLayout = QVBoxLayout()
+        
+        self.rightLayout.addWidget(self.scoreBox)
+        self.rightLayout.addWidget(self.definitionBox)
         
         self.topLayout.addWidget(self.drawingBox)
         self.topLayout.addWidget(self.letterBank)
+        self.topLayout.addLayout(self.rightLayout)
         
         self.mainLayout.addLayout(self.topLayout)
         self.mainLayout.addWidget(self.wordBank)
@@ -52,5 +59,9 @@ class HangmanWindow(QGroupBox):
         
         self.wordBank.reset.connect(self.letterBank.onReset)
         self.wordBank.reset.connect(self.drawingBox.onReset)
+        self.wordBank.win.connect(self.letterBank.onGameOver)
         
         self.drawingBox.lose.connect(self.wordBank.onLose)
+        self.drawingBox.lose.connect(self.letterBank.onGameOver)
+        
+

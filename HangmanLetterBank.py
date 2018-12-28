@@ -43,7 +43,6 @@ class HangmanLetterBank(QGroupBox):
             btn = QPushButton(chr(letter))
             self.letterBtns.append(btn)
             self.letterBtnGrp.addButton(btn)
-        print("buttons made")
             
     
     def createLayout(self):
@@ -59,7 +58,6 @@ class HangmanLetterBank(QGroupBox):
                 if row == 4:
                     column += 2
         self.setLayout(self.mainLayout)
-        print("layout made")
     
     def createActions(self):
         self.letterBtnGrp.buttonClicked.connect(self.onLetterClick)
@@ -83,3 +81,6 @@ class HangmanLetterBank(QGroupBox):
         for btn in self.letterBtns:
             btn.setStyleSheet("")
         
+    def onGameOver(self):
+        for button in self.letterBtns:
+            self.clicked.append(button.text())

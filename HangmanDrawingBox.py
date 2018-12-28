@@ -57,7 +57,6 @@ class HangmanDrawingBox(QGLWidget):
         glEnd()
         
     def drawHead(self):
-        print("drawing head")
         glPushMatrix()
         glTranslatef(0, 5, 0)
         
