@@ -23,6 +23,7 @@ class HangmanWordBank(QGroupBox):
     rightGuess = Signal()
     reset = Signal()
     win = Signal()
+    setDefinition = Signal(str)
     
     def __init__(self):
         super().__init__()
@@ -173,16 +174,22 @@ class HangmanWordBank(QGroupBox):
         
     #slot
     def onRandom(self):
-        #select random word from dictionary 
+        #select random word from dictionary
+        self.messageField.hide() 
         word = '-'
         while not self.wordIsValid(word):
             print(word)
-            f = open('dictionary.txt')
+            f = open('dictionary.csv')
             word = self.randomLine(f).strip()
             f.close()
         
+        w = word.split(",")[0]
+        d = word.split(",")[1].strip()
+        
         #word should be valid now
-        self.setWord(word)
+        self.setWord(w)
+        self.setDefinition.emit(d)
+        
         self.reset.emit()
 
     def randomLine(self, afile):
@@ -199,6 +206,10 @@ class HangmanWordBank(QGroupBox):
         A = ord('A')
         Z = ord('Z')
         space = ord(' ')
+        comma = ord(',')
+        
+        if word.count(',') != 1:
+            return False
         
         for character in word:
             ascii = ord(character)
@@ -207,6 +218,8 @@ class HangmanWordBank(QGroupBox):
             elif ascii >= A and ascii <= Z:
                 continue
             elif ascii == space:
+                continue
+            elif ascii == comma:
                 continue
             else:
                 return False

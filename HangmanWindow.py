@@ -28,7 +28,12 @@ class HangmanWindow(QGroupBox):
         self.drawingBox = HangmanDrawingBox()
         self.letterBank = HangmanLetterBank()
         self.scoreBox = QLabel("Score Box")
+        self.scoreBox.setStyleSheet("background-color: cyan;")
         self.definitionBox = QLabel("Definition Box")
+        self.definitionBox.setStyleSheet("""
+                                            background-color: magenta;
+                                            font-size:        50px;
+                                         """)
         self.wordBank = HangmanWordBank()
     
     def createLayout(self):
@@ -61,7 +66,11 @@ class HangmanWindow(QGroupBox):
         self.wordBank.reset.connect(self.drawingBox.onReset)
         self.wordBank.win.connect(self.letterBank.onGameOver)
         
+        self.wordBank.setDefinition.connect(self.onDefinitionChange)
+        
         self.drawingBox.lose.connect(self.wordBank.onLose)
         self.drawingBox.lose.connect(self.letterBank.onGameOver)
         
-
+    def onDefinitionChange(self, definition):
+        self.definitionBox.setText(definition)    
+    

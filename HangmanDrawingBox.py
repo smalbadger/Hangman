@@ -39,10 +39,16 @@ class HangmanDrawingBox(QGLWidget):
             self.drawTorso()
             
         if self.wrongGuesses >= 3:
-            self.drawArms()
+            self.drawRightArm()
             
         if self.wrongGuesses >= 4:
-            self.drawLegs()
+            self.drawLeftArm()
+            
+        if self.wrongGuesses >= 5:
+            self.drawRightLeg()
+            
+        if self.wrongGuesses >= 6:
+            self.drawLeftLeg()            
             
     def drawHangyThing(self):
         glColor(0.0,0.0,0.0,1.0)
@@ -76,18 +82,26 @@ class HangmanDrawingBox(QGLWidget):
         glVertex2f(0, 0)
         glEnd()
         
-    def drawArms(self):
+    def drawRightArm(self):
         glBegin(GL_LINES)
         glVertex2f(0, 3)
         glVertex2f(2, 2)
+        glEnd()
+        
+    def drawLeftArm(self):
+        glBegin(GL_LINES)
         glVertex2f(0, 3)
         glVertex2f(-2, 2)
         glEnd()
         
-    def drawLegs(self):
+    def drawRightLeg(self):
         glBegin(GL_LINES)
         glVertex2f(0, 0)
         glVertex2f(2, -2)
+        glEnd()
+        
+    def drawLeftLeg(self):
+        glBegin(GL_LINES)
         glVertex2f(0, 0)
         glVertex2f(-2, -2)
         glEnd()
@@ -112,7 +126,7 @@ class HangmanDrawingBox(QGLWidget):
     def onWrongGuess(self):
         self.wrongGuesses += 1
         self.updateGL()
-        if self.wrongGuesses >= 4:
+        if self.wrongGuesses >= 6:
             self.lose.emit()
         
     def onRightGuess(self):
