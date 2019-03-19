@@ -23,10 +23,11 @@ class HangmanWindow(QGroupBox):
         self.createElements()
         self.createLayout()
         self.createActions()
-        
+
     def createElements(self):
         self.drawingBox = HangmanDrawingBox()
         self.letterBank = HangmanLetterBank()
+        self.wordBank = HangmanWordBank()
         self.scoreBox = QLabel("Score Box")
         self.scoreBox.setStyleSheet("background-color: cyan;")
         self.definitionBox = QLabel("Definition Box")
@@ -34,43 +35,41 @@ class HangmanWindow(QGroupBox):
                                             background-color: magenta;
                                             font-size:        50px;
                                          """)
-        self.wordBank = HangmanWordBank()
-    
+
     def createLayout(self):
         self.mainLayout = QVBoxLayout()
         self.topLayout = QHBoxLayout()
         self.rightLayout = QVBoxLayout()
-        
+
         self.rightLayout.addWidget(self.scoreBox)
         self.rightLayout.addWidget(self.definitionBox)
-        
+
         self.topLayout.addWidget(self.drawingBox)
         self.topLayout.addWidget(self.letterBank)
         self.topLayout.addLayout(self.rightLayout)
-        
+
         self.mainLayout.addLayout(self.topLayout)
         self.mainLayout.addWidget(self.wordBank)
-        
+
         self.setLayout(self.mainLayout)
-    
+
     def createActions(self):
         self.letterBank.letterClicked.connect(self.wordBank.onLetterClicked)
-        
+
         self.wordBank.wrongGuess.connect(self.letterBank.onWrongGuess)
         self.wordBank.wrongGuess.connect(self.drawingBox.onWrongGuess)
-        
+
         self.wordBank.rightGuess.connect(self.letterBank.onRightGuess)
         self.wordBank.rightGuess.connect(self.drawingBox.onRightGuess)
-        
+
         self.wordBank.reset.connect(self.letterBank.onReset)
         self.wordBank.reset.connect(self.drawingBox.onReset)
         self.wordBank.win.connect(self.letterBank.onGameOver)
-        
+
         self.wordBank.setDefinition.connect(self.onDefinitionChange)
-        
+
         self.drawingBox.lose.connect(self.wordBank.onLose)
         self.drawingBox.lose.connect(self.letterBank.onGameOver)
-        
+
     def onDefinitionChange(self, definition):
-        self.definitionBox.setText(definition)    
-    
+        self.definitionBox.setText(definition)
